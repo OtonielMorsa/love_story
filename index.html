@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuestra historia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Caveat:wght@500;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbf6f0;
+    --paper:#ffffff;
+    --ink:#3b2f2f;
+    --muted:#8a7a74;
+    --rose:#c4646f;
+    --rose-soft:#f3dcdc;
+    --line:#e7d6cf;
+    --shadow:0 10px 30px rgba(80,50,40,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Nunito',sans-serif;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+
+  /* ---------- Portada ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:40px 20px;
+    background:radial-gradient(circle at 50% 35%, var(--rose-soft) 0%, var(--bg) 65%);
+  }
+  .hero .para{font-family:'Caveat',cursive;font-size:1.8rem;color:var(--rose)}
+  .hero h1{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(2.8rem,9vw,5.5rem);line-height:1.05;margin:8px 0 18px;
+  }
+  .verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.25rem;color:var(--muted);max-width:480px}
+  .verse small{display:block;font-style:normal;font-family:'Nunito',sans-serif;font-size:.85rem;margin-top:6px;letter-spacing:.08em}
+  .scroll{margin-top:48px;color:var(--rose);font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;animation:bob 2s ease-in-out infinite}
+  .scroll span{display:block;font-size:1.5rem}
+  @keyframes bob{50%{transform:translateY(8px)}}
+
+  /* ---------- Línea de tiempo ---------- */
+  .timeline{max-width:980px;margin:0 auto;padding:60px 20px 20px;position:relative}
+  .timeline::before{
+    content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;
+    background:linear-gradient(var(--line),var(--rose-soft),var(--line));transform:translateX(-50%);
+  }
+  .moment{
+    display:flex;align-items:center;gap:48px;margin-bottom:90px;position:relative;
+    opacity:0;transform:translateY(40px);transition:opacity .9s ease, transform .9s ease;
+  }
+  .moment.visible{opacity:1;transform:none}
+  .moment:nth-child(even){flex-direction:row-reverse}
+  .moment::after{
+    content:"♥";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    color:var(--rose);background:var(--bg);font-size:1.1rem;padding:4px;
+  }
+  .moment > *{flex:1;min-width:0}
+
+  .polaroid{
+    background:var(--paper);padding:14px 14px 18px;box-shadow:var(--shadow);
+    transform:rotate(-2.5deg);transition:transform .4s ease;max-width:380px;justify-self:center;
+  }
+  .moment:nth-child(even) .polaroid{transform:rotate(2.5deg)}
+  .polaroid:hover{transform:rotate(0) scale(1.03)}
+  .gallery{position:relative;background:#f1e8e2}
+  .slides{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;align-items:center}
+  .slides::-webkit-scrollbar{display:none}
+  .photo-wrap{flex:0 0 100%;scroll-snap-align:center;display:flex;align-items:center;justify-content:center}
+  .photo-wrap img{display:block;max-width:100%;width:auto;height:auto;max-height:70vh;object-fit:contain;margin:0 auto}
+  .nav{
+    position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;
+    border:none;background:rgba(255,255,255,.85);color:var(--rose);font-size:1.2rem;line-height:1;
+    cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center
+  }
+  .nav.prev{left:8px}.nav.next{right:8px}
+  .nav[hidden]{display:none}
+  .dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
+  .dots span{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .3s, transform .3s}
+  .dots span.on{background:var(--rose);transform:scale(1.25)}
+  .count{position:absolute;top:8px;right:8px;background:rgba(59,47,47,.6);color:#fff;font-size:.75rem;padding:2px 9px;border-radius:999px}
+  .placeholder{aspect-ratio:4/5;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);font-size:.9rem;text-align:center;padding:20px}
+  .placeholder b{display:block;font-size:2rem;margin-bottom:6px}
+  .polaroid figcaption{font-family:'Caveat',cursive;font-size:1.5rem;text-align:center;margin-top:10px;color:var(--ink)}
+
+  .story .date{color:var(--rose);font-weight:600;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase}
+  .story h2{font-family:'Cormorant Garamond',serif;font-size:2.1rem;line-height:1.15;margin:4px 0 12px}
+  .story p{color:#5a4b47;font-size:1.05rem}
+
+  /* ---------- Páginas por escribir ---------- */
+  .future{max-width:980px;margin:0 auto;padding:40px 20px 80px;text-align:center}
+  .future h3{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2rem;margin-bottom:36px;color:var(--muted)}
+  .future-grid{display:flex;flex-wrap:wrap;gap:28px;justify-content:center}
+  .empty{
+    width:200px;background:var(--paper);padding:12px 12px 16px;box-shadow:var(--shadow);
+    opacity:0;transform:translateY(30px);transition:opacity .8s ease, transform .8s ease;
+  }
+  .empty.visible{opacity:1;transform:rotate(var(--r,0deg))}
+  .empty .blank{aspect-ratio:1;border:2px dashed var(--line);display:flex;align-items:center;justify-content:center;color:var(--line);font-size:2.4rem}
+  .empty p{font-family:'Caveat',cursive;font-size:1.3rem;margin-top:8px;color:var(--muted)}
+
+  /* ---------- Final ---------- */
+  .ending{
+    min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:60px 20px;
+    background:radial-gradient(circle at 50% 60%, var(--rose-soft) 0%, var(--bg) 70%);
+  }
+  .ending .lead{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,4.5vw,2.2rem);max-width:640px;line-height:1.35}
+  .ending .question{
+    font-family:'Caveat',cursive;font-size:clamp(2.6rem,9vw,4.4rem);color:var(--rose);
+    margin:34px 0 30px;line-height:1.1;
+  }
+  .btn{
+    font-family:'Nunito',sans-serif;font-weight:600;font-size:1.2rem;
+    background:var(--rose);color:#fff;border:none;border-radius:999px;
+    padding:14px 46px;cursor:pointer;box-shadow:0 8px 22px rgba(196,100,111,.35);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 12px 28px rgba(196,100,111,.45)}
+  .answer{display:none;margin-top:10px}
+  .answer p{font-family:'Caveat',cursive;font-size:2.2rem;color:var(--ink)}
+  .ending .verse{margin-top:50px}
+  .firma{margin-top:28px;font-family:'Caveat',cursive;font-size:1.6rem;color:var(--muted)}
+
+  .heart{position:fixed;bottom:-40px;pointer-events:none;color:var(--rose);animation:rise linear forwards;z-index:10}
+  @keyframes rise{to{transform:translateY(-115vh) rotate(25deg);opacity:0}}
+
+  /* ---------- Celular ---------- */
+  @media (max-width:720px){
+    .timeline::before{left:20px}
+    .moment,.moment:nth-child(even){flex-direction:column;align-items:stretch;gap:22px;padding-left:34px;margin-bottom:70px}
+    .moment::after{left:20px;top:0}
+    .polaroid{max-width:100%}
+    .story h2{font-size:1.8rem}
+    .empty{width:150px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="para" id="para"></p>
+  <h1>Nuestra historia</h1>
+  <p class="verse">"Doy gracias a mi Dios siempre que me acuerdo de ti."<small>FILIPENSES 1:3</small></p>
+  <div class="scroll">Desliza<span>↓</span></div>
+</header>
+
+<main>
+  <section class="timeline" id="timeline"></section>
+
+  <section class="future">
+    <h3>Lo que sigue todavía no está escrito…</h3>
+    <div class="future-grid" id="future"></div>
+  </section>
+</main>
+
+<section class="ending">
+  <p class="lead">Estas páginas están vacías porque quiero llenarlas contigo.</p>
+  <p class="question">¿Quieres ser mi novia?</p>
+  <button class="btn" id="yes">Sí 💛</button>
+  <div class="answer" id="answer"><p>Aquí empieza nuestra primera página juntos ✨</p></div>
+  <p class="verse">"Cordón de tres dobleces no se rompe pronto."<small>ECLESIASTÉS 4:12</small></p>
+  <p class="firma" id="firma"></p>
+</section>
+
+<script>
+/* =========================================================
+   EDITA AQUÍ ✏️
+   - Pon tus fotos en una carpeta llamada "fotos" junto a este archivo.
+   - En "fotos" pon una o varias imágenes entre corchetes, separadas por comas:
+       fotos: ["fotos/cita1.jpg"]
+       fotos: ["fotos/cita1-a.jpg", "fotos/cita1-b.jpg", "fotos/cita1-c.jpg"]
+     Con varias, se pasan deslizando con el dedo o con las flechas.
+   - Si una foto todavía no existe, se muestra un recuadro para agregarla.
+   - Para agregar otro momento, copia un bloque { ... }, y pégalo en la lista.
+   ========================================================= */
+const config = {
+  para: "Para ti, mi amor",   // texto arriba del título
+  firma: "Con todo mi cariño, Luis"
+};
+
+const momentos = [
+  {
+    fecha: "15 de junio, 2026",
+    titulo: "Primer mensaje",
+    fotos: ["img/primeros_mensajes.jpg"],
+    pie: "donde todo comenzó",
+    texto: "Aquí empezó todo, con un simple mensaje. No fue un saludo... una simple respuesta a una nota que se te escapó esconder"
+  },
+  {
+    fecha: "21 de agosto, 2026",
+    titulo: "Por fin me animé",
+    fotos: ["img/mi_declaracion.jpg", "img/su_declaracion.jpg"],
+    pie: "el mensaje más difícil",
+    texto: "Después de mucho tiempo de indirectas que no funcionaban (tal vez no soy tan bueno para eso), por fin me animé a decirte que me gustabas. Sin muchas esperanzas pero con todo el deseo de ser mas que un amigo para tí... y tu respuesta? Gracias a Dios sentías lo mismo por mí."
+  },
+  {
+    fecha: "30 de agosto, 2026",
+    titulo: "Nuestra primer cita",
+    fotos: ["img/sonori.webp", "img/primeras_flores.jpg"],
+    pie: "restaurante Sonori",
+    texto: "Llegué con flores y con muchos nervios. No podía hablar, no podía comer. Solo pensaba en como Dios hacía posible lo que para mí era imposible... Saliendo de ese lugar solo pensaba en que quería verte más y más"
+  },
+  {
+    fecha: "12 de septiembre, 2026",
+    titulo: "Nuestra segunda cita",
+    fotos: ["img/parque.jpg"],
+    pie: "casi, casi…",
+    texto: "El día que me animé a manejar y casi le destruyo la defensa a tu carro al estacionarme. Gracias por seguir subiéndote conmigo después de eso. Prometo seguir practicando. Tambien fue el primer día donde platicamos y platicamos por horas, simplemente no quería que el tiempo contigo terminara."
+  },
+  {
+    fecha: "26 de septiembre, 2026",
+    titulo: "Nuestra tercer cita",
+    fotos: ["img/la_antigua.jpg", "img/primer_foto.jpg"],
+    pie: "restaurante Antigua",
+    texto: "Un lugar con estilo de una epoca pasada, mucha nostalgía y el recuerdo de ser el lugar donde nos tomamos nuestras primeras fotos"
+  },
+  {
+    fecha: "3 de octubre, 2026",
+    titulo: "Nuestra cuarta cita",
+    fotos: ["img/deleite.jpg", "img/pua.jpg", "img/camiseta.jpg", "img/taza.jpg"],
+    pie: "restaurante Deleite",
+    texto: "Otra cita donde hablamos por horas y horas, nunca me había importado lo rapido que pasaba el tiempo como estos días, siempre termino con el deseo de seguir escuchandote. Tambien me diste mi primer regalo: una taza, una camiseta y una púa traídas desde Hawái. Gracias por acordarte de mí... mas que el lugar de donde provienen estos regalos, me enamora el hecho de que pienses en mí y tengas la intención de dar un detalle, No tienes idea de lo mucho que lo aprecio."
+  },
+  {
+    fecha: "4 de octubre, 2026",
+    titulo: "Cuelga tú",
+    fotos: ["img/primer_llamada.jpg"],
+    pie: "nuestra primera llamada",
+    texto: "Nuestra primera llamada, y la primera vez que nos quedamos diciendo «cuelga tú», «no, cuelga tú». Quiero seguir platicando contigo por llamada, videollamada, por mensaje, en persona, por carta... como sea!, pero quiero seguir hablando contigo"
+  },
+  {
+    fecha: "10 de octubre, 2026",
+    titulo: "El día que conocí a tus padres",
+    fotos: ["img/visita_casa.jpg"],
+    pie: "El día mas lluvioso en San Luis",
+    texto: "Uno de los días más dificiles de mi vida... la lluvia no dejaba de caer, los nervios no se podían controlar. Pero el momento había llegado, Al fin me presenté con tus papás"
+  }
+];
+
+// Recuadros vacíos del final (puedes cambiar los textos o agregar más)
+const paginasFuturas = [
+  "nuestra próxima aventura",
+  "el día que…",
+  "algún día, juntos",
+  "…"
+];
+
+/* ================= No necesitas editar debajo de esto ================= */
+document.getElementById("para").textContent = config.para;
+document.getElementById("firma").textContent = config.firma;
+
+const tl = document.getElementById("timeline");
+momentos.forEach(m => {
+  const art = document.createElement("article");
+  art.className = "moment";
+  const fotos = Array.isArray(m.fotos) ? m.fotos : [m.fotos || m.foto].filter(Boolean);
+  const varias = fotos.length > 1;
+  art.innerHTML = `
+    <figure class="polaroid">
+      <div class="gallery">
+        <div class="slides">
+          ${fotos.map((f, i) => `<div class="photo-wrap"><img src="${f}" alt="${m.titulo} ${i + 1}" loading="lazy"></div>`).join("")}
+        </div>
+        ${varias ? `<button class="nav prev" aria-label="Anterior" hidden>‹</button>
+                    <button class="nav next" aria-label="Siguiente">›</button>
+                    <span class="count">1 / ${fotos.length}</span>` : ""}
+      </div>
+      ${varias ? `<div class="dots">${fotos.map((_, i) => `<span class="${i ? "" : "on"}"></span>`).join("")}</div>` : ""}
+      <figcaption>${m.pie || ""}</figcaption>
+    </figure>
+    <div class="story">
+      <p class="date">${m.fecha}</p>
+      <h2>${m.titulo}</h2>
+      <p>${m.texto}</p>
+    </div>`;
+
+  art.querySelectorAll(".photo-wrap img").forEach((img, i) => {
+    img.onerror = () => {
+      img.parentElement.innerHTML = '<div class="placeholder"><b>📷</b>Agrega tu foto en<br>' + fotos[i] + '</div>';
+    };
+  });
+
+  if (varias) {
+    const slides = art.querySelector(".slides");
+    const prev = art.querySelector(".prev"), next = art.querySelector(".next");
+    const dots = art.querySelectorAll(".dots span");
+    const count = art.querySelector(".count");
+    const actual = () => Math.round(slides.scrollLeft / slides.clientWidth);
+    const ir = n => slides.scrollTo({ left: n * slides.clientWidth });
+    prev.onclick = () => ir(actual() - 1);
+    next.onclick = () => ir(actual() + 1);
+    slides.addEventListener("scroll", () => {
+      const n = actual();
+      dots.forEach((d, i) => d.classList.toggle("on", i === n));
+      count.textContent = (n + 1) + " / " + fotos.length;
+      prev.hidden = n === 0;
+      next.hidden = n === fotos.length - 1;
+    }, { passive: true });
+  }
+  tl.appendChild(art);
+});
+
+const fut = document.getElementById("future");
+paginasFuturas.forEach((t, i) => {
+  const d = document.createElement("div");
+  d.className = "empty";
+  d.style.setProperty("--r", (i % 2 ? 3 : -3) + "deg");
+  d.style.transitionDelay = (i * 0.15) + "s";
+  d.innerHTML = `<div class="blank">+</div><p>${t}</p>`;
+  fut.appendChild(d);
+});
+
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } });
+}, { threshold: 0.2 });
+document.querySelectorAll(".moment, .empty").forEach(el => io.observe(el));
+
+document.getElementById("yes").addEventListener("click", function () {
+  this.style.display = "none";
+  document.getElementById("answer").style.display = "block";
+  for (let i = 0; i < 45; i++) {
+    setTimeout(() => {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.textContent = Math.random() > .3 ? "♥" : "✨";
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.fontSize = (16 + Math.random() * 26) + "px";
+      h.style.animationDuration = (3 + Math.random() * 3) + "s";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 6500);
+    }, i * 90);
+  }
+});
+</script>
+</body>
+</html>
