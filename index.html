@@ -9,14 +9,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Caveat:wght@500;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#fbf6f0;
-    --paper:#ffffff;
-    --ink:#3b2f2f;
-    --muted:#8a7a74;
-    --rose:#c4646f;
-    --rose-soft:#f3dcdc;
-    --line:#e7d6cf;
-    --shadow:0 10px 30px rgba(80,50,40,.12);
+    --bg:#f8efe3;          /* crema cálido */
+    --paper:#fffaf3;       /* papel marfil */
+    --ink:#3e2a20;         /* café oscuro */
+    --muted:#8c6f5c;       /* café suave */
+    --rose:#b4533a;        /* terracota / rojo otoñal */
+    --rose-soft:#f1d4b8;   /* durazno */
+    --gold:#d39a3a;        /* mostaza */
+    --line:#e5cdb4;
+    --shadow:0 10px 30px rgba(90,50,20,.16);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -33,7 +34,7 @@
     min-height:100vh;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;padding:40px 20px;
-    background:radial-gradient(circle at 50% 35%, var(--rose-soft) 0%, var(--bg) 65%);
+    background:radial-gradient(circle at 50% 30%, #f6dcc0 0%, var(--bg) 60%), linear-gradient(180deg,#f3d9bd,var(--bg));
   }
   .hero .para{font-family:'Caveat',cursive;font-size:1.8rem;color:var(--rose)}
   .hero h1{
@@ -42,6 +43,7 @@
   }
   .verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.25rem;color:var(--muted);max-width:480px}
   .verse small{display:block;font-style:normal;font-family:'Nunito',sans-serif;font-size:.85rem;margin-top:6px;letter-spacing:.08em}
+  .verse .dias{display:block;font-family:'Caveat',cursive;font-style:normal;font-size:3.4rem;line-height:1;color:var(--rose);margin-bottom:4px}
   .scroll{margin-top:48px;color:var(--rose);font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;animation:bob 2s ease-in-out infinite}
   .scroll span{display:block;font-size:1.5rem}
   @keyframes bob{50%{transform:translateY(8px)}}
@@ -50,7 +52,7 @@
   .timeline{max-width:980px;margin:0 auto;padding:60px 20px 20px;position:relative}
   .timeline::before{
     content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;
-    background:linear-gradient(var(--line),var(--rose-soft),var(--line));transform:translateX(-50%);
+    background:linear-gradient(var(--line),var(--gold),var(--rose),var(--line));transform:translateX(-50%);
   }
   .moment{
     display:flex;align-items:center;gap:48px;margin-bottom:90px;position:relative;
@@ -59,7 +61,7 @@
   .moment.visible{opacity:1;transform:none}
   .moment:nth-child(even){flex-direction:row-reverse}
   .moment::after{
-    content:"♥";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    content:"🍁";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
     color:var(--rose);background:var(--bg);font-size:1.1rem;padding:4px;
   }
   .moment > *{flex:1;min-width:0}
@@ -70,7 +72,7 @@
   }
   .moment:nth-child(even) .polaroid{transform:rotate(2.5deg)}
   .polaroid:hover{transform:rotate(0) scale(1.03)}
-  .gallery{position:relative;background:#f1e8e2}
+  .gallery{position:relative;background:#f0e1cf}
   .slides{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;align-items:center}
   .slides::-webkit-scrollbar{display:none}
   .photo-wrap{flex:0 0 100%;scroll-snap-align:center;display:flex;align-items:center;justify-content:center}
@@ -85,14 +87,14 @@
   .dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
   .dots span{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .3s, transform .3s}
   .dots span.on{background:var(--rose);transform:scale(1.25)}
-  .count{position:absolute;top:8px;right:8px;background:rgba(59,47,47,.6);color:#fff;font-size:.75rem;padding:2px 9px;border-radius:999px}
+  .count{position:absolute;top:8px;right:8px;background:rgba(62,42,32,.65);color:#fff;font-size:.75rem;padding:2px 9px;border-radius:999px}
   .placeholder{aspect-ratio:4/5;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);font-size:.9rem;text-align:center;padding:20px}
   .placeholder b{display:block;font-size:2rem;margin-bottom:6px}
   .polaroid figcaption{font-family:'Caveat',cursive;font-size:1.5rem;text-align:center;margin-top:10px;color:var(--ink)}
 
   .story .date{color:var(--rose);font-weight:600;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase}
   .story h2{font-family:'Cormorant Garamond',serif;font-size:2.1rem;line-height:1.15;margin:4px 0 12px}
-  .story p{color:#5a4b47;font-size:1.05rem}
+  .story p{color:#5e4535;font-size:1.05rem}
 
   /* ---------- Páginas por escribir ---------- */
   .future{max-width:980px;margin:0 auto;padding:40px 20px 80px;text-align:center}
@@ -110,7 +112,7 @@
   .ending{
     min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;padding:60px 20px;
-    background:radial-gradient(circle at 50% 60%, var(--rose-soft) 0%, var(--bg) 70%);
+    background:radial-gradient(circle at 50% 55%, #f3cfa8 0%, var(--bg) 70%);
   }
   .ending .lead{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,4.5vw,2.2rem);max-width:640px;line-height:1.35}
   .ending .question{
@@ -120,10 +122,10 @@
   .btn{
     font-family:'Nunito',sans-serif;font-weight:600;font-size:1.2rem;
     background:var(--rose);color:#fff;border:none;border-radius:999px;
-    padding:14px 46px;cursor:pointer;box-shadow:0 8px 22px rgba(196,100,111,.35);
+    padding:14px 46px;cursor:pointer;box-shadow:0 8px 22px rgba(180,83,58,.35);
     transition:transform .2s ease, box-shadow .2s ease;
   }
-  .btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 12px 28px rgba(196,100,111,.45)}
+  .btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 12px 28px rgba(180,83,58,.45)}
   .answer{display:none;margin-top:10px}
   .answer p{font-family:'Caveat',cursive;font-size:2.2rem;color:var(--ink)}
   .ending .verse{margin-top:50px}
@@ -131,6 +133,15 @@
 
   .heart{position:fixed;bottom:-40px;pointer-events:none;color:var(--rose);animation:rise linear forwards;z-index:10}
   @keyframes rise{to{transform:translateY(-115vh) rotate(25deg);opacity:0}}
+
+  /* Hojas cayendo */
+  .leaf{position:fixed;top:-50px;pointer-events:none;z-index:1;opacity:.75;animation:fall linear infinite}
+  .leaf i{display:block;font-style:normal;animation:sway ease-in-out infinite alternate}
+  @keyframes fall{to{transform:translateY(115vh)}}
+  @keyframes sway{from{transform:translateX(-30px) rotate(-25deg)}to{transform:translateX(30px) rotate(35deg)}}
+  .hero,.timeline,.future,.ending{position:relative;z-index:2}
+  .hero,.ending{z-index:0}
+  @media (prefers-reduced-motion:reduce){.leaf{display:none}}
 
   /* ---------- Celular ---------- */
   @media (max-width:720px){
@@ -148,6 +159,7 @@
 <header class="hero">
   <p class="para" id="para"></p>
   <h1>Nuestra historia</h1>
+  <p class="verse" id="contador"></p>
   <div class="scroll">Desliza<span>↓</span></div>
 </header>
 
@@ -255,6 +267,13 @@ const paginasFuturas = [
 document.getElementById("para").textContent = config.para;
 document.getElementById("firma").textContent = config.firma;
 
+// Contador de días desde el primer mensaje (15 de junio de 2026; los meses empiezan en 0)
+const inicio = new Date(2026, 5, 15);
+const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+const dias = Math.round((hoy - inicio) / 86400000);
+document.getElementById("contador").innerHTML =
+  `<span class="dias">${dias}</span> días desde aquel primer mensaje<small>Y CONTANDO…</small>`;
+
 const tl = document.getElementById("timeline");
 momentos.forEach(m => {
   const art = document.createElement("article");
@@ -328,7 +347,8 @@ document.getElementById("yes").addEventListener("click", function () {
     setTimeout(() => {
       const h = document.createElement("div");
       h.className = "heart";
-      h.textContent = Math.random() > .3 ? "♥" : "✨";
+      const r = Math.random();
+      h.textContent = r < .55 ? "♥" : r < .8 ? "🍁" : "🍂";
       h.style.left = Math.random() * 100 + "vw";
       h.style.fontSize = (16 + Math.random() * 26) + "px";
       h.style.animationDuration = (3 + Math.random() * 3) + "s";
@@ -337,6 +357,21 @@ document.getElementById("yes").addEventListener("click", function () {
     }, i * 90);
   }
 });
+
+// Hojas de otoño cayendo suavemente
+const hojas = ["🍂", "🍁", "🍂", "🍃"];
+const cantidad = window.innerWidth < 720 ? 8 : 14;
+for (let i = 0; i < cantidad; i++) {
+  const l = document.createElement("div");
+  l.className = "leaf";
+  l.innerHTML = `<i>${hojas[i % hojas.length]}</i>`;
+  l.style.left = Math.random() * 100 + "vw";
+  l.style.fontSize = (14 + Math.random() * 16) + "px";
+  l.style.animationDuration = (12 + Math.random() * 14) + "s";
+  l.style.animationDelay = (-Math.random() * 20) + "s";
+  l.firstChild.style.animationDuration = (2.5 + Math.random() * 2.5) + "s";
+  document.body.appendChild(l);
+}
 </script>
 </body>
 </html>
